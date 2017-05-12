@@ -1,24 +1,7 @@
+require_relative 'hanoi/peg.rb'
+require_relative 'hanoi/disk.rb'
+
 class Hanoi
-  class Disk
-    attr_accessor :peg
-
-    def initialize(peg)
-      @peg = peg
-    end
-  end
-
-  class Peg
-    attr_accessor :disks
-
-    def initialize
-      @disks = []
-    end
-
-    def <<(disk)
-      @disks << disk
-    end
-  end
-
   attr_reader :pegs, :disks
 
   def initialize(disks, pegs)
