@@ -1,5 +1,12 @@
 class Hanoi
-  class Disk; end
+  class Disk
+    attr_accessor :peg
+
+    def initialize(peg)
+      @peg = peg
+    end
+  end
+
   class Peg
     attr_accessor :disks
 
@@ -12,15 +19,20 @@ class Hanoi
     end
   end
 
-  attr_reader :pegs
+  attr_reader :pegs, :disks
 
   def initialize(disks, pegs)
     @pegs = []
+    @disks = []
     pegs.times { @pegs << Peg.new }
-    disks.times { @pegs.first << Disk.new }
+    disks.times do
+      disk = Disk.new(@pegs.first)
+      @pegs.first << disk
+      @disks << disk
+    end
   end
 
-  def solve
+  def solve(k = 2)
 
   end
 end
