@@ -8,8 +8,8 @@ class Hanoi
     @pegs = []
     @disks = []
     pegs.times { @pegs << Peg.new }
-    disks.times do
-      disk = Disk.new(@pegs.first)
+    disks.times do |i|
+      disk = Disk.new(disks - i, @pegs.first)
       @pegs.first << disk
       @disks << disk
     end

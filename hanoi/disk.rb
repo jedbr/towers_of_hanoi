@@ -1,8 +1,9 @@
 class Hanoi
   class Disk
-    attr_accessor :peg
+    attr_accessor :peg, :size
 
-    def initialize(peg)
+    def initialize(size, peg)
+      @size = size
       @peg = peg
     end
   end

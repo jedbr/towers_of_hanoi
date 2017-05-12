@@ -7,7 +7,7 @@ class Hanoi
     end
 
     def <<(disk)
-      @disks << disk
+      @disks.unshift(disk)
     end
   end
 end
