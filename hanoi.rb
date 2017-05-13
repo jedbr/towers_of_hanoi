@@ -33,13 +33,13 @@ class Hanoi
     end
   end
 
-  # Frame-Stewart algorithm for 4 pegs
+  # Frame-Stewart-like algorithm for 4 pegs
 
   def solve(verbose = false)
     @verbose = verbose
     k = @disks - sqrt(2 * @disks + 1).round + 1
-    hanoi(k, @pegs[0], @pegs[1], @pegs[2])
-    hanoi(@disks - k, @pegs[0], @pegs[1], @pegs[3])
+    hanoi3(k, @pegs[0], @pegs[1], @pegs[2])
+    hanoi3(@disks - k, @pegs[0], @pegs[1], @pegs[3])
     hanoi(k, @pegs[2], @pegs[1], @pegs[3])
   end
 
