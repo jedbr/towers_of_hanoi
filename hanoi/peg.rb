@@ -1,8 +1,9 @@
 class Hanoi
   class Peg
-    attr_accessor :disks
+    attr_reader :disks, :id
 
-    def initialize
+    def initialize(id)
+      @id = id
       @disks = []
     end
 
@@ -16,6 +17,10 @@ class Hanoi
 
     def size
       @disks.size
+    end
+
+    def first
+      @disks.first
     end
   end
 end
