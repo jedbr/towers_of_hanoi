@@ -1,4 +1,5 @@
 class Hanoi
+  # Class representing single peg in Towers of Hanoi problem
   class Peg
     attr_reader :disks, :id
 

@@ -1,18 +1,19 @@
 require_relative 'hanoi/peg.rb'
 
+# Class solving instance of Towers of Hanoi problem for 3 and 4 pegs.
 class Hanoi
   include Math
   attr_reader :pegs, :moves
 
   Disk = Struct.new(:size)
 
-  def initialize(disks, pegs)
+  def initialize(number_of_disks, number_of_pegs)
     @pegs = []
-    @disks = disks
+    @number_of_disks = number_of_disks
     @moves = 0
-    pegs.times { |i| @pegs << Peg.new(i + 1) }
-    disks.times do |i|
-      disk = Disk.new(disks - i)
+    number_of_pegs.times { |i| @pegs << Peg.new(i + 1) }
+    number_of_disks.times do |i|
+      disk = Disk.new(number_of_disks - i)
       @pegs.first << disk
     end
   end
@@ -40,27 +41,27 @@ class Hanoi
     end
   end
 
-  # Frame-Stewart algorithm for 4 pegs
+  # Optimal Frame-Stewart recursive algorithm for 4 pegs
 
   def solve(verbose = true)
     @verbose = verbose
     print_start
-    hanoi4(@disks, @pegs[0], [@pegs[1], @pegs[2]], @pegs[3])
+    hanoi4(@number_of_disks, @pegs[0], [@pegs[1], @pegs[2]], @pegs[3])
   end
 
   def hanoi4(number_of_disks, from, additional_pegs, to)
     k = number_of_disks - sqrt(2 * number_of_disks + 1).round + 1
-    hanoi3(k, from, additional_pegs.first, additional_pegs.last)
+    hanoi4(k, from, [additional_pegs.first, to], additional_pegs.last) if k > 0
     hanoi3(number_of_disks - k, from, additional_pegs.first, to)
-    hanoi4(k, additional_pegs.last, [from, additional_pegs.first], to) unless k > 0
+    hanoi4(k, additional_pegs.last, [from, additional_pegs.first], to) if k > 0
   end
 
-  # Classic algorithm for 3 pegs
+  # Classic recursive algorithm for 3 pegs
 
   def solve3(verbose = true)
     @verbose = verbose
     print_start
-    k = @disks
+    k = @number_of_disks
     hanoi3(k, @pegs[0], @pegs[1], @pegs[2])
   end
 
