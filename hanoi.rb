@@ -37,9 +37,9 @@ class Hanoi
 
   def solve(verbose = false)
     @verbose = verbose
-    k = @disks.size - sqrt(2 * @disks.size + 1).round + 1
+    k = @disks - sqrt(2 * @disks + 1).round + 1
     hanoi(k, @pegs[0], @pegs[1], @pegs[2])
-    hanoi(@disks.size - k, @pegs[0], @pegs[1], @pegs[3])
+    hanoi(@disks - k, @pegs[0], @pegs[1], @pegs[3])
     hanoi(k, @pegs[2], @pegs[1], @pegs[3])
   end
 
@@ -57,7 +57,7 @@ class Hanoi
 
   def solve3(verbose = false)
     @verbose = verbose
-    k = @disks.size
+    k = @disks
     hanoi3(k, @pegs[0], @pegs[1], @pegs[2])
   end
 
