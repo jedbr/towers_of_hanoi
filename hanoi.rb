@@ -17,6 +17,13 @@ class Hanoi
     end
   end
 
+  def print_start
+    return unless @verbose
+    puts '----------------------------'
+    puts 'Start'
+    print_current_state
+  end
+
   def print_report(move)
     return unless @verbose
     puts '----------------------------'
@@ -28,15 +35,16 @@ class Hanoi
   def print_current_state
     @pegs.each do |p|
       print "Peg #{p.id} | "
-      disks = p.disks.map(&:size)
+      disks = p.disks.map(&:size).reverse
       puts "Disks: #{disks}"
     end
   end
 
   # Frame-Stewart algorithm for 4 pegs
 
-  def solve(verbose = false)
+  def solve(verbose = true)
     @verbose = verbose
+    print_start
     hanoi4(@disks, @pegs[0], [@pegs[1], @pegs[2]], @pegs[3])
   end
 
@@ -49,8 +57,9 @@ class Hanoi
 
   # Classic algorithm for 3 pegs
 
-  def solve3(verbose = false)
+  def solve3(verbose = true)
     @verbose = verbose
+    print_start
     k = @disks
     hanoi3(k, @pegs[0], @pegs[1], @pegs[2])
   end
