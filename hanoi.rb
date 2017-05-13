@@ -2,28 +2,27 @@ require_relative 'hanoi/peg.rb'
 
 class Hanoi
   include Math
-  attr_reader :pegs, :disks, :moves
+  attr_reader :pegs, :moves
 
   Disk = Struct.new(:size)
 
   def initialize(disks, pegs)
     @pegs = []
-    @disks = []
+    @disks = disks
     @moves = 0
     pegs.times { |i| @pegs << Peg.new(i + 1) }
     disks.times do |i|
       disk = Disk.new(disks - i)
       @pegs.first << disk
-      @disks << disk
     end
   end
 
   def print_report(move)
+    return unless @verbose
     puts '----------------------------'
     puts "Move: #{@moves}"
-    puts "Disk #{move[:item]} moved from #{move[:from]} to #{move[:to]}"
+    puts "Disk #{move[:item]} moved from peg #{move[:from]} to peg #{move[:to]}"
     print_current_state
-    puts '----------------------------'
   end
 
   def print_current_state
@@ -36,7 +35,8 @@ class Hanoi
 
   # Frame-Stewart algorithm for 4 pegs
 
-  def solve
+  def solve(verbose = false)
+    @verbose = verbose
     k = @disks.size - sqrt(2 * @disks.size + 1).round + 1
     hanoi(k, @pegs[0], @pegs[1], @pegs[2])
     hanoi(@disks.size - k, @pegs[0], @pegs[1], @pegs[3])
@@ -55,7 +55,8 @@ class Hanoi
 
   # Classic algorithm for 3 pegs
 
-  def solve3
+  def solve3(verbose = false)
+    @verbose = verbose
     k = @disks.size
     hanoi3(k, @pegs[0], @pegs[1], @pegs[2])
   end
