@@ -33,24 +33,18 @@ class Hanoi
     end
   end
 
-  # Frame-Stewart-like algorithm for 4 pegs
+  # Frame-Stewart algorithm for 4 pegs
 
   def solve(verbose = false)
     @verbose = verbose
-    k = @disks - sqrt(2 * @disks + 1).round + 1
-    hanoi3(k, @pegs[0], @pegs[1], @pegs[2])
-    hanoi3(@disks - k, @pegs[0], @pegs[1], @pegs[3])
-    hanoi(k, @pegs[2], @pegs[1], @pegs[3])
+    hanoi4(@disks, @pegs[0], [@pegs[1], @pegs[2]], @pegs[3])
   end
 
-  def hanoi(k, a, b, c)
-    if k > 0
-      hanoi(k - 1, a, c, b)
-      c << a.shift
-      @moves += 1
-      print_report(from: a.id, to: c.id, item: c.first.size)
-      hanoi(k - 1, b, a, c)
-    end
+  def hanoi4(number_of_disks, from, additional_pegs, to)
+    k = number_of_disks - sqrt(2 * number_of_disks + 1).round + 1
+    hanoi3(k, from, additional_pegs.first, additional_pegs.last)
+    hanoi3(number_of_disks - k, from, additional_pegs.first, to)
+    hanoi4(k, additional_pegs.last, [from, additional_pegs.first], to) unless k > 0
   end
 
   # Classic algorithm for 3 pegs
@@ -61,13 +55,12 @@ class Hanoi
     hanoi3(k, @pegs[0], @pegs[1], @pegs[2])
   end
 
-  def hanoi3(k, a, b, c)
-    if k > 0
-      hanoi3(k - 1, a, c, b)
-      c << a.shift
-      @moves += 1
-      print_report(from: a.id, to: c.id, item: c.first.size)
-      hanoi3(k - 1, b, a, c)
-    end
+  def hanoi3(k, from, additional_peg, to)
+    return unless k > 0
+    hanoi3(k - 1, from, to, additional_peg)
+    to << from.shift
+    @moves += 1
+    print_report(from: from.id, to: to.id, item: to.first.size)
+    hanoi3(k - 1, additional_peg, from, to)
   end
 end
